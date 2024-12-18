@@ -1,0 +1,38 @@
+@view-transition {
+  navigation: auto;
+}
+
+:root {
+  --speed: 0.26s;
+}
+
+::view-transition {
+  background:
+    url("/favicon.svg") calc(100% - 2rem) calc(100% - 2rem) / 10vmax 10vmax
+      no-repeat,
+    hsl(279, 77%, 62%);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  --mask-frames: 20;
+  --from: 100%;
+  --to: 0%;
+  mask-image: url("/sprite-one.svg");
+  mask-repeat: no-repeat;
+  mask-size: calc((var(--mask-frames) + 1) * 100vmax) 100vmax;
+  mask-position: var(--from, 100%) 50%;
+  animation: sweep var(--speed) steps(var(--mask-frames)) both;
+}
+
+::view-transition-new(root) {
+  --from: 0%;
+  --to: 100%;
+  mask-image: url("/sprite-two.svg");
+  animation-delay: calc(var(--speed) * 2);
+}
+@keyframes sweep {
+  to {
+    mask-position: var(--to) 50%;
+  }
+}
